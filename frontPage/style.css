@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+}
+
+
+#nav{
+    background-image: linear-gradient(to left,black ,rgb(9, 9, 54),rgba(0, 0, 0, 0.764),black);
+height: 6vh;
+}
+
+.navcontainer{
+    display: flex;
+    flex-direction: row;   
+}
+
+.navcontainer li a{
+    text-decoration: none;
+    color: azure;
+}
+
+.navcontainer btn{
+    margin: 1vh;
+    width: 10vw;
+
+}
+.navitems{
+    display: inline-block;
+    width: 25vw ;
+    margin: 1vw 5vw;
+    text-align: center;
+    justify-content: center;
+}
+.top-header h1{
+    text-align: center;
+    justify-content: center;
+    height: 15vh;
+    color: azure;
+    font-size: 600%;
+    background-color: grey;
+}
+
+#music-content{
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+}
+.image-container{
+    height: 250px;
+    width: 250px;
+    overflow: hidden;
+}
+
+.item-details{
+    display: flex;
+    margin: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.prod-img{
+    transform-origin: center center;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    transition: ease-in 0.5s;
+    filter: brightness(100%);
+} 
+
+#merch-content{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.prod-heading{
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: brown;
+    color: beige;
+}
+#go-to-cart{
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(69, 69, 219);
+}
+
+
+footer{
+    display: flex;
+    margin-top: 40px;
+    padding: 20px;
+    background: #56CCF2;
+}
+
+
+.footer-title{
+    text-align: center;
+    color: white;
+    width: 50%;
+    font-size: 50px;
+    font-weight: bold;
+    margin: 0 auto;
+}
+.footer-items{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
