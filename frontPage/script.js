@@ -1,3 +1,63 @@
+window.addEventListener('DOMContentLoaded',()=>{
+    axios.get("http://localhost:3000/products/").then((result) => {
+        console.log(result);
+        displayMusicProducts(result)
+    }).catch((err) => {
+        console.log(err);
+    });
+})
+
+
+//show products
+
+function displayMusicProducts(products){
+let musicContent= document.getElementById("music-content")
+products.forEach(element => {
+    console.log(element);
+    let mainDiv =document.createElement('div');
+    mainDiv.id=element.id;
+mainDiv.className="product";
+
+//heading
+let heading= document.createElement('h2');
+heading.className="prod-heading";
+heading.innerHTML=element.title;
+mainDiv.appendChild(heading);
+
+//image div
+let imgDiiv = document.createElement('div');
+imgDiiv.className="image-container";
+
+//image
+let img = document.createElement("img")
+img.src=element.imageUrl;
+img.className="prod-img"
+imgDiiv.appendChild(img);
+mainDiv.appendChild(imgDiiv);
+
+//item details div
+let detailDiv= document.createElement('div');
+detailDiv.className="item-details";
+let dollar= document.createElement('span');
+dollar.innerHTML="$"
+detailDiv.appendChild(dollar);
+prodprice= document.createElement('span')
+prodprice.appendChild(document.createTextNode(element.price))
+detailDiv.appendChild(prodprice)
+mainDiv.appendChild(detailDiv)
+
+//add to cart biutton
+let btn = document.createElement('button');
+btn.className="add-button";
+btn.innerHTML="add to cart"
+detailDiv.appendChild(btn)
+
+musicContent.appendChild(mainDiv)
+});
+}
+
+
+
 let seecartbtn= document.getElementById('go-to-cart');
 seecartbtn.addEventListener('click',opencart);
 function opencart(){
