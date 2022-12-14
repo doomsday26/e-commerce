@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded',()=>{
-    axios.get("http://localhost:3000/products/").then((result) => {
+    axios.get("http://localhost:3000/").then((result) => {
         console.log(result);
+        getCartItems()
         displayMusicProducts(result)
     }).catch((err) => {
         console.log(err);
@@ -72,77 +73,72 @@ function hideCart(){
 let id =0
 
 function addtocart(e){
-
-// console.log(e.target.parentNode.parentNode.id);
-// console.log("object clivked");
-
-if(e.target.className==='add-button'){
-//cart logo update
-let count= document.getElementById('cartitems').innerHTML -0;
-count=count+1;
-console.log(count);
-document.getElementById('cartitems').innerHTML=count;
-
-let element= e.target.parentNode.parentNode;
-console.log(element);
-console.log(element.childNodes);
-
-let cartList = document.getElementById('cart-list')
-
-let item = document.createElement('div');
-item.className="cart-items"
-//idspan
-let idspan= document.createElement('span');
-idspan.style.display='none'
-idspan.innerText=id++;
-item.appendChild(idspan)
-//image span
-let img= element.childNodes[3].childNodes[1].cloneNode(true);
-img.classList.remove('prod-img')
- img.classList.add('cart-item-image')
-let imgSpan= document.createElement('span')
-imgSpan.appendChild(img);
-item.appendChild(imgSpan)
-console.log(id);
-
-// name span
-let nameSpan= document.createElement('span');
-nameSpan.className='cart-item-name'
-nameSpan.innerHTML=element.childNodes[1].innerHTML
-item.appendChild(nameSpan)
-
-//price span
-let priceSpan = document.createElement('span');
-priceSpan.className="cart-item-price";
-let text=element.childNodes[5].childNodes[2].innerText
-priceSpan.appendChild(document.createTextNode(text))
-item.appendChild(priceSpan)
+if(e.target.className==='add-button');
+console.log(e.target.parentNode.parentNode.id);
+let key=e.target.parentNode.parentNode.id
+axios.post("http://localhost:3000/cart/"+key).then(result=>{
+    console.log(result);
+    getCartItems()
+})
 
 
-//qty
-let qtyspan= document.createElement('span');
-qtyspan.className='cart-item-qty';
-qtyspan.appendChild(document.createTextNode('1'));
-item.appendChild(qtyspan);
 
-//remove btn
-let btn=document.createElement('button');
-btn.className='cart-remove-btn';
-btn.innerText='REMOVE'
-item.appendChild(btn)
-cartList.appendChild(item)
 
 }
+
+
+//id title price
+function getCartItems(){
+axios.get("http://localhost:3000/cart").then(products=>{products.forEach(product=>{
+console.log(":first cart product:");
+console.log(product);
+//Object { id: 3, quantity: 1, productId: 2 }
+let maindiv= document.createElement('div');
+maindiv.className="cart-items"
+maindiv.id=product.id;
+
+//image spamn
+let imgspan= document.createElement('span');
+let img = document.createElement('img')
+img.className="cart-item-image"
+img.src=product.imageUrl
+imgspan.appendChild(img)
+maindiv.appendChild(imgspan)
+
+
+//input for  cartitem id
+let cartidintput= document.createElement('input');
+cartidintput.value=product.cartItem.id;
+cartidintput.type="hidden"
+maindiv.appendChild(cartidintput)
 
 //
+let namespan= document.createElement('span');
+namespan.className="cart-item-name";
+namespan.innerHTML=product.title;
+maindiv.appendChild(namespan)
 
+let pricespan = document.createElement('span');
+pricespan.className="cart-item-price"
+pricespan.innerHTML=product.price;
+maindiv.appendChild(pricespan)
 
+let qtyspan= document.createElement('span');
+qtyspan.className="cart-item-qty"
+qtyspan.innerHTML=product.cartItem.quantity;
+maindiv.appendChild(qtyspan);
 
-//update in cart
-// let cartList = document.getElementById('cart-list')
-// let li= document.createElement('li')
-// li.innerHTML=items
-// cartList.appendChild(li)
+//remove button 
+let btn= document.createElement('button');
+btn.className="cart-remove-btn"
+btn.innerText="REMOVE"
+maindiv.appendChild(btn)
 
+document.getElementById('cart-list').appendChild(maindiv)
+})}).then(()=>{console.log("cart items loaded");}).catch(err=>{console.log(err);})
 
 }
+
+
+
+
