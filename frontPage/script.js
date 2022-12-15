@@ -1,8 +1,12 @@
+let cartlogo= document.getElementById('cartlogo')
+let currentnumber= cartlogo.innerText-0;
+
 window.addEventListener('DOMContentLoaded',()=>{
-    axios.get("http://localhost:3000/").then((result) => {
+    axios.get("http://localhost:3000/?page=1").then((result) => {
         console.log(result);
+        console.log(result.totalProducts);
         getCartItems()
-        displayMusicProducts(result)
+        displayMusicProducts(result.totalProducts)
     }).catch((err) => {
         console.log(err);
     });
@@ -13,6 +17,9 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 function displayMusicProducts(products){
 let musicContent= document.getElementById("music-content")
+console.log(products);
+while(musicContent.firstChild){musicContent.removeChild(musicContent.lastChild)}
+
 products.forEach(element => {
     console.log(element);
     let mainDiv =document.createElement('div');
@@ -71,8 +78,11 @@ function hideCart(){
     document.getElementById('cart').style="display:none;"
 }
 let id =0
-
 function addtocart(e){
+
+ 
+
+
 if(e.target.className==='add-button');
 console.log(e.target.parentNode.parentNode.id);
 let key=e.target.parentNode.parentNode.id
@@ -85,7 +95,6 @@ axios.post("http://localhost:3000/cart/"+key).then(result=>{
 
 
 }
-
 
 //id title price
 function getCartItems(){
@@ -135,10 +144,50 @@ btn.innerText="REMOVE"
 maindiv.appendChild(btn)
 
 document.getElementById('cart-list').appendChild(maindiv)
-})}).then(()=>{console.log("cart items loaded");}).catch(err=>{console.log(err);})
+})}).then(()=>{ currentnumber=document.getElementById('cart-list').childNodes.length ;cartlogo.innerText=currentnumber; console.log("cart items loaded");}).catch(err=>{console.log(err);})
 
+}
+
+function pagination(e){
+    if(e.target.parentNode.id=='pagination'){
+        console.log("pagination");
+        let page=e.target.innerText;
+        page=page-0
+
+let paginationsection = document.getElementById('pagination');
+while(paginationsection.firstChild){
+    paginationsection.removeChild(paginationsection.lastChild)
+}
+//currentPage: 1, prePage: 0, nextPage: 2 Count: 7
+        axios.get(`http://localhost:3000/?page=${page}`).then((result) => {
+            console.log(result);
+if(result.prePage >=0){
+let pre= document.createElement('button')
+pre.innerText=result.prePage;
+paginationsection.appendChild(pre)
+}
+
+let curr= document.createElement('button')
+curr.innerText=result.currentPage;
+paginationsection.appendChild(curr)
+
+
+if(result.Count>result.currentPage*result.lim){
+let after= document.createElement('button')
+after.innerText=result.nextPage
+paginationsection.appendChild(after)
+}
+
+        displayMusicProducts(result.totalProducts)
+    }).catch((err) => {
+        console.log(err);
+    });
+    }
 }
 
 
 
-
+// pagination allows us to distribute data into multiple pages
+// we use it so that we have to interact with tons of data
+// skip- it allows us to skip a certain amount of data values, providing an offset to the data we are fetching
+// limit- it allows us to provide a limit on the data we want to fetch, instead of fetching all the data which is a cumbersome process

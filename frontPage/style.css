@@ -322,3 +322,25 @@ margin-right: 15px;
     padding: 1vh 2vw;
     margin-bottom: 2vh;
 }
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.pagination button{
+    border-radius: 2px;
+    border: 2px solid black;
+ margin: 0 2rem;
+    background-color: antiquewhite;
+    width: 2rem;
+}
+
+.pagination button:hover,
+.pagination button:active
+{   cursor: pointer;
+    background-color: #767393;
+    color: wheat;
+}
