@@ -1,10 +1,8 @@
-let cartlogo= document.getElementById('cartlogo')
-let currentnumber= cartlogo.innerText-0;
 
 window.addEventListener('DOMContentLoaded',()=>{
     axios.get("http://localhost:3000/?page=1").then((result) => {
-        console.log(result);
-        console.log(result.totalProducts);
+        //console.log(result);
+        //console.log(result.totalProducts);
         getCartItems()
         displayMusicProducts(result.totalProducts)
     }).catch((err) => {
@@ -65,42 +63,59 @@ musicContent.appendChild(mainDiv)
 }
 
 
-
 let seecartbtn= document.getElementById('go-to-cart');
 seecartbtn.addEventListener('click',opencart);
+
+
 function opencart(){
     document.getElementById('cart').style="display:block;"
     
 }
+
+
 let closeCart=document.getElementById('closeCart')
 closeCart.addEventListener('click',hideCart)
 function hideCart(){
     document.getElementById('cart').style="display:none;"
 }
+
 let id =0
-function addtocart(e){
-
- 
 
 
-if(e.target.className==='add-button');
+async function addtocart(e){
+if(e.target.className==='add-button'){
+    console.log("add to cart successfully");
 console.log(e.target.parentNode.parentNode.id);
 let key=e.target.parentNode.parentNode.id
-axios.post("http://localhost:3000/cart/"+key).then(result=>{
+await axios.post("http://localhost:3000/cart/"+key).then(result=>{
+    getCartItems();
     console.log(result);
-    getCartItems()
+   // getCartItems()
+
 })
-
-
-
-
+} 
 }
 
+
+
 //id title price
-function getCartItems(){
-axios.get("http://localhost:3000/cart").then(products=>{products.forEach(product=>{
-console.log(":first cart product:");
-console.log(product);
+async function  getCartItems(){
+
+await axios.get("http://localhost:3000/cart").then(products=>{
+    console.log("cart products");
+console.log(products);   
+document.getElementById('cartlogo').innerHTML=products.length
+
+//remove previous
+let prevlist=document.getElementById('cart-list')
+while(prevlist.firstChild){
+    prevlist.removeChild(prevlist.lastChild)
+}
+
+
+products.forEach(product=>{
+// console.log(i++ ,"cart products:");
+// console.log(product);
 //Object { id: 3, quantity: 1, productId: 2 }
 let maindiv= document.createElement('div');
 maindiv.className="cart-items"
@@ -144,7 +159,7 @@ btn.innerText="REMOVE"
 maindiv.appendChild(btn)
 
 document.getElementById('cart-list').appendChild(maindiv)
-})}).then(()=>{ currentnumber=document.getElementById('cart-list').childNodes.length ;cartlogo.innerText=currentnumber; console.log("cart items loaded");}).catch(err=>{console.log(err);})
+})}).catch(err=>{console.log(err);})
 
 }
 
@@ -185,9 +200,45 @@ paginationsection.appendChild(after)
     }
 }
 
+function order(){
+    // if(confirm("are you sure")==true){
+    //     console.log("true");
+
+    // }else{console.log("false");}
+
+    axios.post("http://localhost:3000/createOrder").then(result=>{
+
+
+alert("order placed successfully with order Id of : " + result.Result[0].orderId);
+
+}).catch(err=>{console.log(err);})
+
+
+
+}
 
 
 // pagination allows us to distribute data into multiple pages
 // we use it so that we have to interact with tons of data
 // skip- it allows us to skip a certain amount of data values, providing an offset to the data we are fetching
 // limit- it allows us to provide a limit on the data we want to fetch, instead of fetching all the data which is a cumbersome process
+
+function removeFromCart(e){
+    if(e.target.className==="cart-remove-btn"){
+        let delId=e.target.parentNode.id
+axios.post(`http://localhost:3000/cart-delete-item/?delId=${delId}`).then(result=>{
+    console.log(result);
+getCartItems();
+console.log("product deleted");
+}).catch(err=>{console.log(err);})
+
+
+
+
+
+
+
+
+    }
+
+}

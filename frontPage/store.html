@@ -15,10 +15,11 @@
           <li class="navitems"><a href="home.html">HOME</a></li>
           <li class="navitems"><a href="store.html">STORE</a></li>
           <li class="navitems"><a href="about.html">ABOUT</a></li>
-          <button id="cartbtn">
-            <a href="cart.html">CART</a><span id="cartlogo">0</span>
-          </button>
-        </ul>
+          <span id="logo">
+        <span><img style="height: 30px;" src="https://i.pinimg.com/564x/2b/35/a4/2b35a4763a31b6f5f40d9de9d7e05f88.jpg" alt=""></span><span id="cartlogo">0</span>
+      </span>  
+      </ul>
+   
       </nav>
       <h1>THE CLUB</h1>
     </header>
@@ -74,9 +75,9 @@
         <button id="closeCart">X</button></nav>
    
       <header id="cart-header"><span class="cart-heading-items" style="width: 40%;"  >ITEM</span><span class="cart-heading-items">PRICE</span><span class="cart-heading-items">QUANTITY</span></header>
-<div id="cart-list">
+<div id="cart-list" onclick="removeFromCart(event)">
   
-  <div id="productID" class="cart-items">
+  <!-- <div id="productID" class="cart-items">
     <span ><img class="cart-item-image"  src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
       alt=""
     /></span>
@@ -85,10 +86,11 @@
     <span class="cart-item-price">price</span>
     <span class="cart-item-qty" >Qt</span>
     <button class="cart-remove-btn">REMOVE</button>
-    </div>
+    </div> -->
 
 
 </div>
+<button id="orderNow" onclick="order()" >Order Now</button>
     </section>
 
 <section id="pagination" class="pagination" onclick="pagination(event)" >
@@ -98,7 +100,7 @@
 </section>
 
 
-<div id="go-to-cart"> <button>go to cart</button></div>
+<div id="go-to-cart"> <button onclick="getCartItems()">go to cart</button></div>
    
 
 

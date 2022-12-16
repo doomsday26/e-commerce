@@ -246,6 +246,9 @@ width: 40vw;
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(177, 103, 103);
     min-height: 50vh;
+    overflow-y: scroll;
+    padding-bottom: 2vh;
+    margin-bottom: 20vh;
 }
 
 #cart-header{
@@ -311,6 +314,7 @@ margin-right: 15px;
     width: 20%;
  background-color:black;
  color: wheat;
+ cursor: pointer;
  border-radius: 5px;
 }
 
@@ -343,4 +347,36 @@ margin-right: 15px;
 {   cursor: pointer;
     background-color: #767393;
     color: wheat;
+}
+
+
+#orderNow{
+justify-content: center;
+text-align: center;
+margin: 0.5vh auto;
+margin-left: 45%;
+cursor: pointer;
+background-color: #9b94de;
+box-shadow: 5px 2.5px 2.5px black;
+margin-bottom: 10vh
+}
+#cartlogo{
+color: white;
+background-color: #9b94de;
+border-radius: 5px;
+margin-top: 2px;
+height: 25px;
+width: 25px;
+border: 2px solid white;
+}
+#logo{
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
+#logo span{
+    text-align: center;
+    margin-top: 5px;
+margin-right: 10px;
 }
